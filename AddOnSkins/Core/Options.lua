@@ -115,30 +115,32 @@ AS.Options.args.general.args.SkinTemplate = ACH:Select(L["Template"], nil, 3, fu
 
 AS.Options.args.general.args.Font = ACH:SharedMediaFont(L["Font"], nil, 1)
 AS.Options.args.general.args.FontSize = ACH:Range(L["Font Size"], nil, 2, { min = 6, max = 22, step = 1 })
-AS.Options.args.general.args.FontFlag = ACH:FontFlags(L["Font Flag"], nil, 3)
+AS.Options.args.general.args.FontFlag = ACH:Select(L["Font Flag"], nil, 3, ACH.FontValues)
 
-AS.Options.args.general.args.Textures = ACH:Group(L["Textures"], nil, 4)
+AS.Options.args.general.args.Textures = ACH:Group(L["Textures"], nil, 5)
 AS.Options.args.general.args.Textures.inline = true
 AS.Options.args.general.args.Textures.args.BackgroundTexture = ACH:SharedMediaStatusbar('Background Texture', nil, 1, nil, nil, nil, nil, function() return AS:CheckOption('ElvUIStyle', 'ElvUI') end)
 AS.Options.args.general.args.Textures.args.StatusBarTexture = ACH:SharedMediaStatusbar('StatusBar Texture', nil, 2, nil, nil, nil, nil, function() return AS:CheckOption('ElvUIStyle', 'ElvUI') end)
 AS.Options.args.general.args.Textures.args.CropIcons = ACH:Toggle(L["Crop Icons"], nil, 3)
-AS.Options.args.general.args.Textures.args.Parchment = ACH:Toggle(L["Parchment"]..' (WIP)', nil, 3)
-AS.Options.args.general.args.Textures.args.Shadows = ACH:Toggle(L["Shadows"], nil, 4)
-AS.Options.args.general.args.Textures.args.DBMSkinHalf = ACH:Toggle(L["DBM Half-bar Skin"], nil, 5)
+AS.Options.args.general.args.Textures.args.Parchment = ACH:Toggle(L["Parchment"]..' (WIP)', nil, 4)
+AS.Options.args.general.args.Textures.args.Shadows = ACH:Toggle(L["Shadows"], nil, 5)
+AS.Options.args.general.args.Textures.args.DBMSkinHalf = ACH:Toggle(L["DBM Half-bar Skin"], nil, 6)
 
-AS.Options.args.general.args.Colors = ACH:Group(L["Colors"], nil, 5, nil, function(info) return unpack(AS:CheckOption(info[#info])) end, function(info, r, g, b, a) AS:SetOption(info[#info], { r, g, b, a }) AS:UpdateSettings() end)
+AS.Options.args.general.args.Colors = ACH:Group(L["Colors"], nil, 6, nil, function(info) return unpack(AS:CheckOption(info[#info])) end, function(info, r, g, b, a) AS:SetOption(info[#info], { r, g, b, a }) AS:UpdateSettings() end)
 AS.Options.args.general.args.Colors.inline = true
 AS.Options.args.general.args.Colors.args.CustomBackdropColor = ACH:Color(L["Backdrop Color"], nil, 1, true, nil, nil, nil, nil, function() return (AS:CheckOption('SkinTemplate') ~= 'Custom') or AS:CheckOption('ElvUIStyle', 'ElvUI') end)
 AS.Options.args.general.args.Colors.args.CustomBorderColor = ACH:Color(L["Border Color"], nil, 2, true, nil, nil, nil, nil, function() return (AS:CheckOption('SkinTemplate') ~= 'Custom') or AS:CheckOption('ElvUIStyle', 'ElvUI') end)
-AS.Options.args.general.args.Colors.args.HighlightColor = ACH:Color(L["Highlight"], nil, 3)
-AS.Options.args.general.args.Colors.args.SelectedColor = ACH:Color(L["Selected / Checked"], nil, 4)
-AS.Options.args.general.args.Colors.args.StatusBarColor = ACH:Color(L["Status Bars"], nil, 5)
+AS.Options.args.general.args.Colors.args.HighlightColor = ACH:Color(L["Highlight"], nil, 3, true)
+AS.Options.args.general.args.Colors.args.SelectedColor = ACH:Color(L["Selected / Checked"], nil, 4, true)
+AS.Options.args.general.args.Colors.args.StatusBarColor = ACH:Color(L["Status Bars"], nil, 5, true)
 
 AS.Options.args.skins = ACH:Group(L["Skins"], nil, 1, nil, function(info) return AS:CheckOption(info[#info]) end, function(info, value) AS:SetOption(info[#info], value) AS.NeedReload = true end)
-AS.Options.args.skins.args.addons = ACH:MultiSelect(L["AddOns"], nil, 1, nil, nil, nil, function(_, key) return AS:CheckOption(key) end, function(_, key, value) AS:SetOption(key, value) AS.NeedReload = true end)
-AS.Options.args.skins.args.blizzard = ACH:MultiSelect(L["Blizzard"], nil, 2, nil, nil, nil, function(_, key) return AS:CheckOption(key) end, function(_, key, value) AS:SetOption(key, value) AS.NeedReload = true end)
-AS.Options.args.skins.args.blizzardEnableAll = ACH:Execute(L["Blizzard: Enable All"], nil, 3, function() for SkinName in pairs(BlizzardSkins) do AS:SetOption(SkinName, true) end end)
-AS.Options.args.skins.args.blizzardDisableAll = ACH:Execute(L["Blizzard: Disable All"], nil, 4, function() for SkinName in pairs(BlizzardSkins) do AS:SetOption(SkinName, false) end end)
+AS.Options.args.skins.args.addonEnableAll = ACH:Execute(L["AddOns: Enable All"], nil, 1, function() for skinName in pairs(AS.skins) do if not strfind(skinName, 'Blizzard_') then AS:SetOption(skinName, true) end end for skinName, data in pairs(AS.preload) do if not strfind(skinName, 'Blizzard_') and (not data.addon or not tContains(AS.skins, data.addon)) then AS:SetOption(skinName, true) end end end)
+AS.Options.args.skins.args.addonDisableAll = ACH:Execute(L["AddOns: Disable All"], nil, 2, function() for skinName in pairs(AS.skins) do if not strfind(skinName, 'Blizzard_') then AS:SetOption(skinName, false) end end for skinName, data in pairs(AS.preload) do if not strfind(skinName, 'Blizzard_') and (not data.addon or not tContains(AS.skins, data.addon)) then AS:SetOption(skinName, false) end end end)
+AS.Options.args.skins.args.addons = ACH:MultiSelect(L["AddOns"], nil, 3, nil, nil, nil, function(_, key) return AS:CheckOption(key) end, function(_, key, value) AS:SetOption(key, value) AS.NeedReload = true end)
+AS.Options.args.skins.args.blizzard = ACH:MultiSelect(L["Blizzard"], nil, 4, nil, nil, nil, function(_, key) return AS:CheckOption(key) end, function(_, key, value) AS:SetOption(key, value) AS.NeedReload = true end)
+AS.Options.args.skins.args.blizzardEnableAll = ACH:Execute(L["Blizzard: Enable All"], nil, 5, function() for SkinName in pairs(BlizzardSkins) do AS:SetOption(SkinName, true) end end)
+AS.Options.args.skins.args.blizzardDisableAll = ACH:Execute(L["Blizzard: Disable All"], nil, 6, function() for SkinName in pairs(BlizzardSkins) do AS:SetOption(SkinName, false) end end)
 
 AS.Options.args.embed = ACH:Group(L["Embed Settings"], nil, 4, nil, function(info) return AS:CheckOption(info[#info]) end, function(info, value) AS:SetOption(info[#info], value) ES:Check() end)
 AS.Options.args.embed.args.EmbedIsHidden = ACH:Toggle(L["|cFFFF0000Embed is currently HIDDEN|r"], nil, 0, nil, nil, 'full', nil, nil, nil, function() return not AS:CheckOption('EmbedIsHidden') end)
@@ -213,7 +215,7 @@ function AS:BuildProfile()
 			ClassColor = false,
 			CropIcons = true,
 			CustomBackdropColor = { .5, .5, .5, .8 },
-			CustomBorderColor = { 0, 0, 0 },
+			CustomBorderColor = { 0, 0, 0, 1 },
 			Font = 'Arial Narrow',
 			FontFlag = 'OUTLINE',
 			FontSize = 12,
@@ -221,13 +223,13 @@ function AS:BuildProfile()
 			ElvUIStyle = AS:CheckAddOn('ElvUI') and true or false,
 			EmbedSystemMessage = true,
 			HideChatFrame = 'NONE',
-			HighlightColor = { 1, .8, .1 },
+			HighlightColor = { 1, .8, .1, 1 },
 			LoginMsg = false,
 			Parchment = false,
-			SelectedColor = { 0, 0.44, .87 },
+			SelectedColor = { 0, 0.44, .87, 1 },
 			Shadows = true,
 			SkinTemplate = 'Transparent',
-			StatusBarColor = { .01, .39, .1 },
+			StatusBarColor = { .01, .39, .1, 1 },
 			StatusBarTexture = 'Blizzard Raid Bar',
 			Theme = 'PixelPerfect',
 		},
