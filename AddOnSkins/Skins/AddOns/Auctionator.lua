@@ -1,4 +1,5 @@
 local AS, L, S, R = unpack(AddOnSkins)
+if not AS:CheckAddOn('ElvUI') then return end
 local E = unpack(ElvUI)
 
 -- Credits: Simpy
