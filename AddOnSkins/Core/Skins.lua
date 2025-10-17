@@ -27,7 +27,7 @@ S.Hider:Hide()
 S.noop = function() end
 
 local BlizzardRegions = { 'Left', 'Middle', 'Right', 'LeftDisabled', 'MiddleDisabled', 'RightDisabled', 'TopLeft', 'TopRight', 'BottomLeft', 'BottomRight', 'TopMiddle', 'MiddleLeft', 'MiddleRight', 'BottomMiddle', 'MiddleMiddle', 'Center', 'TopTex', 'TopLeftTex', 'TopRightTex', 'LeftTex', 'BottomTex', 'BottomLeftTex', 'BottomRightTex', 'RightTex', 'MiddleTex', 'TabSpacer', 'TabSpacer1', 'TabSpacer2', '_RightSeparator', '_LeftSeparator', 'Cover', 'Mid', 'Border', 'Background', 'Delimiter' }
-local BlizzardFrames = { 'Inset', 'inset', 'InsetFrame', 'LeftInset', 'RightInset', 'NineSlice', 'BG', 'bgLeft', 'bgRight', 'border', 'Border', 'BorderFrame', 'bottomInset', 'BottomInset', 'FilligreeOverlay', 'PortraitOverlay', 'ArtOverlayFrame', 'Portrait', 'portrait', 'ScrollFrameBorder' }
+local BlizzardFrames = { 'Inset', 'inset', 'InsetFrame', 'LeftInset', 'RightInset', 'NineSlice', 'BG', 'Bg', 'bgLeft', 'bgRight', 'border', 'Border', 'Background', 'BorderFrame', 'bottomInset', 'BottomInset', 'FilligreeOverlay', 'PortraitOverlay', 'ArtOverlayFrame', 'Portrait', 'portrait', 'ScrollFrameBorder', 'ScrollUpBorder', 'ScrollDownBorder' }
 local BlizzardTextureIDs = {
 	[137056] = true, -- Interface\\Tooltips\\UI-Tooltip-Background
 	[137057] = true, -- Interface\\Tooltips\\UI-Tooltip-Border
